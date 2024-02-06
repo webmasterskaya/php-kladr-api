@@ -1,0 +1,35 @@
+{
+	"name": "webmasterskaya/php-kladr-api",
+	"type": "library",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Artem Vasilev",
+			"email": "kern.usr@gmail.com",
+			"homepage": "https://github.com/kernusr",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": "^8.0",
+		"symfony/options-resolver": "^7.0",
+		"psr-discovery/http-client-implementations": "^1.0",
+		"psr-discovery/http-factory-implementations": "~1",
+		"psr/http-client": "~1",
+		"psr/http-factory": "~1"
+	},
+	"require-dev": {
+		"guzzlehttp/guzzle": "^7.8"
+	},
+	"autoload": {
+		"psr-4": {
+			"Webmasterskaya\\Kladr\\": "src/"
+		}
+	},
+	"config": {
+		"optimize-autoloader": true,
+		"preferred-install": "dist",
+		"sort-packages": true,
+		"process-timeout": 3600
+	}
+}
