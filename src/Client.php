@@ -126,11 +126,13 @@ class Client
                 ])
                 ->setRequired(['contentType'])
                 ->setIgnoreUndefined();
+        }
 
-            // Почтовый индекс работает только при contentType = building
-            if ($config['contentType'] = Type\Content::BUILDING) {
-                $resolver->setDefined(['zip']);
-            }
+        // Почтовый индекс работает только при contentType == building
+        if ($config['contentType'] = Type\Content::BUILDING) {
+            $resolver->setDefined(['zip']);
+        } else {
+            $resolver->remove(['zip']);
         }
 
         $config = $resolver->resolve($config);
