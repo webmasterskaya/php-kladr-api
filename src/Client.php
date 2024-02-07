@@ -10,6 +10,9 @@ use PsrDiscovery\Exceptions\SupportPackageNotFoundException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Webmasterskaya\Kladr\Exception\RuntimeException;
 
+/**
+ * Класс HTTP API клиента, для работы с сервисом kladr-api.ru
+ */
 class Client
 {
     /**
