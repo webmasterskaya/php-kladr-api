@@ -12,19 +12,30 @@ use Webmasterskaya\Kladr\Exception\RuntimeException;
 
 class Client
 {
+    /**
+     * API токен доступ к сервису
+     *
+     * @var string
+     */
     protected mixed $token;
 
+    /**
+     * Глобальные параметры клиента
+     *
+     * @var array<string,mixed>
+     */
     protected array $config
         = [
             'url' => 'https://kladr-api.com/api.php',
         ];
 
     /**
-     * @param   string|null  $token
-     * @param   array        $config
+     * @param   string|null  $token   API токен доступ к сервису. Если не указан, то подключение осуществляется к бесплатной версии сервиса
+     * @param   array        $config  Массив глобальных настроек клиента
      */
     public function __construct(?string $token, array $config = [])
     {
+        // Если токен отсутствует, то меняем URL сервера на бесплатный
         if (!empty($token)) {
             $this->token = $token;
         } else {
@@ -36,7 +47,17 @@ class Client
         }
     }
 
-    public function queryString(string $query, array $config = [], int $limit = 10, int $offset = 0)
+    /**
+     * Производит поиск по всем доступным полям адреса
+     *
+     * @param   string  $query   Строка запроса (что хотите найти?)
+     * @param   array   $config  Параметры запроса. Подробнее о параметрах смотри в README.md
+     * @param   int     $limit   Количество результатов в ответе
+     * @param   int     $offset  Смещение результатов (для организации постраничной навигации)
+     *
+     * @return array
+     */
+    public function queryString(string $query, array $config = [], int $limit = 10, int $offset = 0): array
     {
         /** @var \Symfony\Component\OptionsResolver\OptionsResolver $resolver */
         static $resolver;
@@ -57,10 +78,20 @@ class Client
 
         $config['oneString'] = 1;
 
-        return $this->exequte($query, $config, $limit, $offset);
+        return $this->execute($query, $config, $limit, $offset);
     }
 
-    public function queryFilter(string $query, array $config = [], int $limit = 10, int $offset = 0)
+    /**
+     * Производит поиск только по указанному полю адреса
+     *
+     * @param   string  $query   Строка запроса (что хотите найти?)
+     * @param   array   $config  Параметры запроса. Подробнее о параметрах смотри в README.md
+     * @param   int     $limit   Количество результатов в ответе
+     * @param   int     $offset  Смещение результатов (для организации постраничной навигации)
+     *
+     * @return array
+     */
+    public function queryField(string $query, array $config = [], int $limit = 10, int $offset = 0): array
     {
         /** @var \Symfony\Component\OptionsResolver\OptionsResolver $resolver */
         static $resolver;
@@ -69,7 +100,7 @@ class Client
             $resolver = new OptionsResolver();
 
             $resolver
-                ->setDefined(['withParent', 'regionId', 'districtId', 'cityId', 'streetId', 'buildingId', 'contentType', 'typeCode', 'zip'])
+                ->setDefined(['withParent', 'regionId', 'districtId', 'cityId', 'streetId', 'buildingId', 'contentType', 'typeCode'])
                 ->setAllowedTypes('regionId', ['string'])
                 ->setAllowedTypes('districtId', ['string'])
                 ->setAllowedTypes('cityId', ['string'])
@@ -95,19 +126,29 @@ class Client
                 ])
                 ->setRequired(['contentType'])
                 ->setIgnoreUndefined();
-        }
 
-        // Почтовый индекс работает только при contentType = building
-        if (array_key_exists('zip', $config)) {
-            $config['contentType'] = Type\Content::BUILDING;
+            // Почтовый индекс работает только при contentType = building
+            if ($config['contentType'] = Type\Content::BUILDING) {
+                $resolver->setDefined(['zip']);
+            }
         }
 
         $config = $resolver->resolve($config);
 
-        return $this->exequte($query, $config, $limit, $offset);
+        return $this->execute($query, $config, $limit, $offset);
     }
 
-    protected function exequte(string $query, array $config, int $limit = 10, int $offset = 0)
+    /**
+     * Формирует запрос к API
+     *
+     * @param   string  $query   Строка запроса (что хотите найти?)
+     * @param   array   $config  Параметры запроса. Подробнее о параметрах смотри в README.md
+     * @param   int     $limit   Количество результатов в ответе
+     * @param   int     $offset  Смещение результатов (для организации постраничной навигации)
+     *
+     * @return array
+     */
+    protected function execute(string $query, array $config, int $limit = 10, int $offset = 0): array
     {
         /**
          * @var \Psr\Http\Client\ClientInterface          $client
@@ -183,13 +224,15 @@ class Client
     }
 
     /**
-     * @param $config
+     * Формирует полный URL запроса к API, на основе переданных параметров
+     *
+     * @param   array  $config  Параметры запроса. Подробнее о параметрах смотри в README.md
      *
      * @return string
      */
-    protected function buildUrl($config): string
+    protected function buildUrl(array $config): string
     {
-        if ($this->token) {
+        if (isset($this->token)) {
             $config['token'] = $this->token;
         } else {
             unset($config['token']);
