@@ -69,7 +69,7 @@ class Client
             $resolver = new OptionsResolver();
 
             $resolver
-                ->setDefined(['withParent', 'regionId', 'districtId', 'cityId', 'contentType'])
+                ->setDefined(['withParent', 'regionId', 'districtId', 'cityId'])
                 ->setAllowedTypes('regionId', ['string'])
                 ->setAllowedTypes('districtId', ['string'])
                 ->setAllowedTypes('cityId', ['string'])
