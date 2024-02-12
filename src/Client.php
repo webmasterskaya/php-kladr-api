@@ -110,7 +110,6 @@ class Client
                 ->setAllowedTypes('cityId', ['string'])
                 ->setAllowedTypes('streetId', ['string'])
                 ->setAllowedTypes('buildingId', ['string'])
-                ->setAllowedTypes('zip', ['int', 'string'])
                 ->setAllowedTypes('withParent', ['int', 'bool'])
                 ->setAllowedValues('contentType', [
                     Type\Content::REGION,
@@ -133,8 +132,9 @@ class Client
         }
 
         // Почтовый индекс работает только при contentType == building
-        if ($config['contentType'] = Type\Content::BUILDING) {
+        if ($config['contentType'] === Type\Content::BUILDING) {
             $resolver->setDefined(['zip']);
+            $resolver->setAllowedTypes('zip', ['int', 'string']);
         } else {
             $resolver->remove(['zip']);
         }
