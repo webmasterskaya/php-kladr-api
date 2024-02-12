@@ -199,11 +199,11 @@ class Client
 
         $status = $response->getStatusCode();
         if ($status >= 400 && $status < 500) {
-            throw new RuntimeException('HTTP Client error: ' . $response->getReasonPhrase());
+            throw new RuntimeException('HTTP Client error: ' . $response->getReasonPhrase() . '. Text: ' .$response->getBody());
         }
 
         if ($status >= 500) {
-            throw new RuntimeException('HTTP Server error: ' . $response->getReasonPhrase());
+            throw new RuntimeException('HTTP Server error: ' . $response->getReasonPhrase() . '. Text: ' .$response->getBody());
         }
 
         $result = $response->getBody()->__toString();
