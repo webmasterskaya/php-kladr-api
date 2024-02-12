@@ -2,6 +2,7 @@
 
 namespace Webmasterskaya\Kladr;
 
+use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -157,9 +158,8 @@ class Client
     {
         /**
          * @var \Psr\Http\Client\ClientInterface          $client
-         * @var \Psr\Http\Message\RequestFactoryInterface $request_factory
          */
-        static $client, $request_factory;
+        static $client;
 
         if (!isset($client)) {
             try {
@@ -169,17 +169,6 @@ class Client
                 }
             } catch (SupportPackageNotFoundException $e) {
                 throw new RuntimeException('PSR-18 HTTP Client not found');
-            }
-        }
-
-        if (!isset($request_factory)) {
-            try {
-                $request_factory = Discover::httpRequestFactory();
-                if (!($request_factory instanceof RequestFactoryInterface)) {
-                    throw new RuntimeException('PSR-17 HTTP Request Factory not found');
-                }
-            } catch (SupportPackageNotFoundException $e) {
-                throw new RuntimeException('PSR-17 HTTP Request Factory not found');
             }
         }
 
@@ -199,7 +188,7 @@ class Client
 
         $url = $this->buildUrl($config);
 
-        $request = $request_factory
+        $request = (new Psr17Factory())
             ->createRequest('GET', $url);
 
         try {

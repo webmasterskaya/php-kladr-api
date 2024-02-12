@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a97ae2f2ee5b7a55f275b2ea9eefe2cb",
+    "content-hash": "f524645d98859aa17ef10f567710f2fb",
     "packages": [
         {
             "name": "composer/semver",
@@ -86,6 +86,84 @@
                 }
             ],
             "time": "2023-08-31T09:50:34+00:00"
+        },
+        {
+            "name": "nyholm/psr7",
+            "version": "1.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Nyholm/psr7.git",
+                "reference": "aa5fc277a4f5508013d571341ade0c3886d4d00e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Nyholm/psr7/zipball/aa5fc277a4f5508013d571341ade0c3886d4d00e",
+                "reference": "aa5fc277a4f5508013d571341ade0c3886d4d00e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.1 || ^2.0"
+            },
+            "provide": {
+                "php-http/message-factory-implementation": "1.0",
+                "psr/http-factory-implementation": "1.0",
+                "psr/http-message-implementation": "1.0"
+            },
+            "require-dev": {
+                "http-interop/http-factory-tests": "^0.9",
+                "php-http/message-factory": "^1.0",
+                "php-http/psr7-integration-tests": "^1.0",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.4",
+                "symfony/error-handler": "^4.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nyholm\\Psr7\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                },
+                {
+                    "name": "Martijn van der Ven",
+                    "email": "martijn@vanderven.se"
+                }
+            ],
+            "description": "A fast PHP7 implementation of PSR-7",
+            "homepage": "https://tnyholm.se",
+            "keywords": [
+                "psr-17",
+                "psr-7"
+            ],
+            "support": {
+                "issues": "https://github.com/Nyholm/psr7/issues",
+                "source": "https://github.com/Nyholm/psr7/tree/1.8.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Zegnat",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nyholm",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-11-13T09:31:12+00:00"
         },
         {
             "name": "psr-discovery/discovery",
@@ -238,80 +316,6 @@
                 "source": "https://github.com/psr-discovery/http-client-implementations/tree/1.0.0"
             },
             "time": "2023-03-27T06:16:24+00:00"
-        },
-        {
-            "name": "psr-discovery/http-factory-implementations",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/psr-discovery/http-factory-implementations.git",
-                "reference": "064bb0ec6d2e49aeb6f15aa5a8793abe02daf56b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/psr-discovery/http-factory-implementations/zipball/064bb0ec6d2e49aeb6f15aa5a8793abe02daf56b",
-                "reference": "064bb0ec6d2e49aeb6f15aa5a8793abe02daf56b",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.0",
-                "psr-discovery/discovery": "^1.0",
-                "psr/http-factory": "^1.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.14",
-                "infection/infection": "^0.26",
-                "mockery/mockery": "^1.5",
-                "pestphp/pest": "^2.0",
-                "phpstan/phpstan": "^1.10",
-                "phpstan/phpstan-strict-rules": "^1.5",
-                "rector/rector": "^0.15",
-                "vimeo/psalm": "^5.8",
-                "wikimedia/composer-merge-plugin": "^2.0"
-            },
-            "type": "library",
-            "extra": {
-                "merge-plugin": {
-                    "ignore-duplicates": false,
-                    "include": [
-                        "composer.local.json"
-                    ],
-                    "merge-dev": true,
-                    "merge-extra": false,
-                    "merge-extra-deep": false,
-                    "merge-scripts": false,
-                    "recurse": true,
-                    "replace": true
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "PsrDiscovery\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Evan Sims",
-                    "email": "hello@evansims.com",
-                    "homepage": "https://evansims.com/"
-                }
-            ],
-            "description": "Lightweight library that discovers available PSR-17 HTTP Factory implementations by searching for a list of well-known classes that implement the relevant interface, and returns an instance of the first one that is found.",
-            "homepage": "https://github.com/psr-discovery/http-factory-implementations",
-            "keywords": [
-                "discovery",
-                "psr",
-                "psr-18"
-            ],
-            "support": {
-                "issues": "https://github.com/psr-discovery/http-factory-implementations/issues",
-                "source": "https://github.com/psr-discovery/http-factory-implementations/tree/1.0.1"
-            },
-            "time": "2023-04-26T06:22:45+00:00"
         },
         {
             "name": "psr/http-client",
@@ -984,7 +988,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^8.0"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }
